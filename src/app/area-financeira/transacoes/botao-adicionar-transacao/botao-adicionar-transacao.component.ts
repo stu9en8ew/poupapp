@@ -1,9 +1,10 @@
-import { Component, output, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { KeyValuePipe } from '@angular/common';
 import { TipoTransacao, Transacao } from '../../compartilhados/transacao.model';
 import { BotaoComponent } from '../../../compartilhados/botao/botao.component';
 import { ModalComponent } from '../../../compartilhados/modal/modal.component';
 import { FormsModule} from "@angular/forms";
+import { Conta } from '../../compartilhados/conta.model';
 
 @Component({
   selector: 'app-botao-adicionar-transacao',
@@ -53,5 +54,7 @@ export class BotaoAdicionarTransacaoComponent {
     this.modalAberto.set(false);
 
   }
+
+  contas = input.required<Conta[]>();
 
 }
