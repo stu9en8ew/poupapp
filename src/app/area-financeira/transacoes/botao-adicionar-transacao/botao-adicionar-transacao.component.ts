@@ -1,6 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, output, signal } from '@angular/core';
 import { KeyValuePipe } from '@angular/common';
-import { TipoTransacao } from '../../compartilhados/transacao.model';
+import { TipoTransacao, Transacao } from '../../compartilhados/transacao.model';
 import { BotaoComponent } from '../../../compartilhados/botao/botao.component';
 import { ModalComponent } from '../../../compartilhados/modal/modal.component';
 import { FormsModule} from "@angular/forms";
@@ -32,6 +32,8 @@ export class BotaoAdicionarTransacaoComponent {
     })
   }
   */
+
+  transacaoCriada = output<Transacao>();
   
 
   abrirModal(){
@@ -39,7 +41,17 @@ export class BotaoAdicionarTransacaoComponent {
   }
 
   aoSubmeter(){
-    console.log(this.novaTransacaoForm);
+    const novaTransacao = new Transacao(
+      this.novaTransacaoForm.nome,
+      this.novaTransacaoForm.tipo as TipoTransacao,
+      Number(this.novaTransacaoForm.valor),
+      this.novaTransacaoForm.data,
+      this.novaTransacaoForm.conta
+    );
+
+    this.transacaoCriada.emit(novaTransacao);
+    this.modalAberto.set(false);
+
   }
 
 }
